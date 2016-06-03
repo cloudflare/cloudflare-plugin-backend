@@ -1,0 +1,22 @@
+{
+  "name": "cloudflare/cpanel-plugin-backend",
+  "description": "A PHP backend for CloudFlare plugins.",
+  "license": "BSD-3-Clause",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "format": "vendor/bin/phpcs -n --standard=PSR2 --extensions=php,live.php src/"
+  },
+  "require": {
+    "guzzlehttp/guzzle": "~5.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.8.*",
+    "squizlabs/php_codesniffer": "2.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "CF\\": "src/"
+    }
+}
+}
