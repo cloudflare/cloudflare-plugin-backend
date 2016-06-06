@@ -1,5 +1,5 @@
 {
-  "name": "cloudflare/cpanel-plugin-backend",
+  "name": "cloudflare/cloudflare-plugin-backend",
   "description": "A PHP backend for CloudFlare plugins.",
   "license": "BSD-3-Clause",
   "version": "1.0.0",
