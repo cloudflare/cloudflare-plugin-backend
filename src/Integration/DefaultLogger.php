@@ -1,7 +1,10 @@
 <?php
 namespace CF\Integration;
 
-class DefaultLogger implements LoggerInterface
+use \Psr\Log\AbstractLogger;
+use \Psr\Log\LogLevel;
+
+class DefaultLogger extends AbstractLogger implements LoggerInterface
 {
     private $debug;
 
@@ -15,57 +18,41 @@ class DefaultLogger implements LoggerInterface
         $this->debug = $debug;
     }
 
-
     /**
-     * @param $logLevel
-     * @param $message
-     * @return bool
+     * Logs with an arbitrary level.
+     *
+     * @param mixed  $level
+     * @param string $message
+     * @param array  $context
+     *
+     * @return null
      */
-    public function log($logLevel, $message)
-    {
-        return error_log(self::PREFIX . " " . strtoupper($logLevel) . " " . $message);
+    public function log($level, $message, array $context = array()) {
+        return error_log(self::PREFIX . " " . strtoupper($level) . ": " . $message . " " .
+            (!empty($context) ? print_r($context,true) : ""));
     }
 
     /**
-     * @param $message
+     * Detailed debug information.
+     *
+     * @param string $message
+     * @param array  $context
+     *
+     * @return null
      */
-    public function info($message)
+    public function debug($message, array $context = array())
     {
-        $this->log("INFO", $message);
-    }
-
-    /**
-     * @param $message
-     */
-    public function debug($message)
-    {
-        if ($this->debug) {
-            $this->log("DEBUG", $message);
+        if($this->debug) {
+           return $this->log(LogLevel::DEBUG, $message, $context);
         }
-    }
-
-    /**
-     * @param $message
-     */
-    public function warn($message)
-    {
-        $this->log("WARN", $message);
-    }
-
-    /**
-     * @param $message
-     */
-    public function error($message)
-    {
-        $this->log("ERROR", $message);
     }
 
     public function logAPICall($api, $message, $is_debug)
     {
 
-        $log_level = "ERROR";
+        $log_level = "error";
         if ($is_debug) {
-            $log_level = "DEBUG";
+            $log_level = "debug";
         }
 
         if (!is_string($message)) {
