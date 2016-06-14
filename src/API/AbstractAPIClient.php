@@ -60,21 +60,34 @@ abstract class AbstractAPIClient implements APIInterface
             }
 
             if (!$this->responseOk($response)) {
-                $this->logger->logAPICall($this->getAPIClientName(), array('type' => 'response', 'body' => $response), false);
+                $this->logAPICall($this->getAPIClientName(), array('type' => 'response', 'body' => $response), true);
             }
 
             return $response;
         } catch (RequestException $e) {
-            $this->logger->logAPICall($this->getAPIClientName(), array(
+            $this->logAPICall($this->getAPIClientName(), array(
                 'type' => "request",
                 'method' => $request->getMethod(),
                 'path' => $request->getUrl(),
                 'headers' => $request->getHeaders(),
                 'params' => $request->getParameters(),
-                'body' => $request->getBody()), false);
-            $this->logger->logAPICall($this->getAPIClientName(), array('type' => "response", 'code' => $e->getCode(), 'body' => $e->getMessage(), 'stacktrace' => $e->getTraceAsString()), false);
+                'body' => $request->getBody()), true);
+            $this->logAPICall($this->getAPIClientName(), array('type' => "response", 'code' => $e->getCode(), 'body' => $e->getMessage(), 'stacktrace' => $e->getTraceAsString()), true);
             return $this->createAPIError($e->getMessage());
         }
+    }
+
+    public function logAPICall($api, $message, $isError) {
+        $logLevel = "error";
+        if ($isError === false) {
+            $logLevel = "debug";
+        }
+
+        if (!is_string($message)) {
+            $message = print_r($message, true);
+        }
+
+        $this->logger->$logLevel("[" . $api . "] " . $message);
     }
 
 
