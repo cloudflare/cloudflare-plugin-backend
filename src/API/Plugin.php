@@ -14,6 +14,7 @@ class Plugin extends Client
     const SETTING_DEFAULT_SETTINGS = "default_settings";
     const SETTING_IP_REWRITE = "ip_rewrite";
     const SETTING_PROTOCOL_REWRITE = "protocol_rewrite";
+    const PLUGIN_SPECIFIC_CACHE = 'plugin_specific_cache';
 
     /**
      * @return string
