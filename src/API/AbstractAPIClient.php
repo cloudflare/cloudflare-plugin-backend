@@ -65,11 +65,7 @@ abstract class AbstractAPIClient implements APIInterface
 
             return $response;
         } catch (RequestException $e) {
-            $jsonResponse = json_decode($e->getResponse()->getBody(), true);
-            $errorMessage = $e->getMessage();
-            if (count($jsonResponse['errors']) > 0) {
-                $errorMessage = $jsonResponse['errors'][0]['message'];
-            }
+            $errorMessage = getErrorMessage($e);
 
             $this->logAPICall($this->getAPIClientName(), array(
                 'type' => 'request',
