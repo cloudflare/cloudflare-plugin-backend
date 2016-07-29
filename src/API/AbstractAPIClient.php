@@ -120,4 +120,11 @@ abstract class AbstractAPIClient implements APIInterface
      * @return mixed
      */
     abstract public function getAPIClientName();
+
+    /**
+     * @param $message
+     *
+     * @return array
+     */
+    abstract public function createAPIError($message);
 }
