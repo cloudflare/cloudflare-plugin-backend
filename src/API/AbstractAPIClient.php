@@ -84,7 +84,22 @@ abstract class AbstractAPIClient implements APIInterface
         }
     }
 
-    public function logAPICall($api, $message, $isError)
+    /**
+     * @param RequestException $object
+     *
+     * @return string
+     */
+    public function getErrorMessage(RequestException $error)
+    {
+        return $error->getMessage();
+    }
+
+    /**
+     * @param string $apiName
+     * @param array  $message
+     * @param bool   $isError
+     */
+    public function logAPICall(string $apiName, array $message, bool $isError)
     {
         $logLevel = 'error';
         if ($isError === false) {
@@ -95,7 +110,7 @@ abstract class AbstractAPIClient implements APIInterface
             $message = print_r($message, true);
         }
 
-        $this->logger->$logLevel('['.$api.'] '.$message);
+        $this->logger->$logLevel('['.$apiName.'] '.$message);
     }
 
     /**

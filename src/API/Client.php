@@ -49,6 +49,22 @@ class Client extends AbstractAPIClient
     }
 
     /**
+     * @param RequestException object
+     *
+     * @return string
+     */
+    public function getErrorMessage($error)
+    {
+        $jsonResponse = json_decode($error->getResponse()->getBody(), true);
+        $errorMessage = $error->getMessage();
+        if (count($jsonResponse['errors']) > 0) {
+            $errorMessage = $jsonResponse['errors'][0]['message'];
+        }
+
+        return $errorMessage;
+    }
+
+    /**
      * @param $response
      *
      * @return bool
