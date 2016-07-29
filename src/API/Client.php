@@ -2,6 +2,8 @@
 
 namespace CF\API;
 
+use GuzzleHttp\Exception\RequestException;
+
 class Client extends AbstractAPIClient
 {
     const CLIENT_API_NAME = 'CLIENT API';
@@ -49,14 +51,15 @@ class Client extends AbstractAPIClient
     }
 
     /**
-     * @param RequestException object
+     * @param RequestException error
      *
      * @return string
      */
-    public function getErrorMessage($error)
+    public function getErrorMessage(RequestException $error)
     {
         $jsonResponse = json_decode($error->getResponse()->getBody(), true);
         $errorMessage = $error->getMessage();
+
         if (count($jsonResponse['errors']) > 0) {
             $errorMessage = $jsonResponse['errors'][0]['message'];
         }
