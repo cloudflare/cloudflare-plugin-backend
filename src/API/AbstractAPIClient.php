@@ -65,7 +65,7 @@ abstract class AbstractAPIClient implements APIInterface
 
             return $response;
         } catch (RequestException $e) {
-            $errorMessage = getErrorMessage($e);
+            $errorMessage = $this->getErrorMessage($e);
 
             $this->logAPICall($this->getAPIClientName(), array(
                 'type' => 'request',
