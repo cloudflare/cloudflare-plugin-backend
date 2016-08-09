@@ -109,8 +109,6 @@ abstract class AbstractAPIClient implements APIInterface
         $this->logger->$logLevel('['.$apiName.'] '.$message);
     }
 
-<<<<<<< HEAD
-=======
     /**
      * @param Request $request
      * @return string
@@ -125,8 +123,6 @@ abstract class AbstractAPIClient implements APIInterface
         return (strpos($request->getUrl(), $this->getEndpoint()) !== false);
     }
 
-
->>>>>>> PI-727: Requests should route through CF\Router\RequestRouter now.
     /**
      * @param Request $request
      *
@@ -140,15 +136,14 @@ abstract class AbstractAPIClient implements APIInterface
     abstract public function getAPIClientName();
 
     /**
-<<<<<<< HEAD
      * @param $message
      *
      * @return array
      */
     abstract public function createAPIError($message);
-=======
+
+    /**
      * @return mixed
      */
     abstract public function getEndpoint();
->>>>>>> PI-727: Requests should route through CF\Router\RequestRouter now.
 }

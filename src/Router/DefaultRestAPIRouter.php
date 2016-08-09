@@ -65,7 +65,6 @@ class DefaultRestAPIRouter implements RouterInterface
         }
     }
 
-<<<<<<< HEAD
     /**
      * @param Request $request
      *
@@ -76,9 +75,7 @@ class DefaultRestAPIRouter implements RouterInterface
         //substring of everything after the endpoint is the path
         return substr($request->getUrl(), strpos($request->getUrl(), $this->api->getEndpoint()) + strlen($this->api->getEndpoint()));
     }
-=======
->>>>>>> PI-727: Requests should route through CF\Router\RequestRouter now.
-
+    
     /**
      * @param Request $request
      *
