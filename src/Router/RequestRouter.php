@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace CF\Router;
 
@@ -32,11 +32,26 @@ class RequestRouter
     }
 
     /**
+     * @return array
+     */
+    public function getRouterList() {
+        return $this->routerList;
+    }
+
+
+    /**
+     * @param $routerList
+     */
+    public function setRouterList($routerList) {
+        $this->routerList = $routerList;
+    }
+
+    /**
      * @param Request $request
      * @return bool
      */
     public function route(Request $request) {
-        foreach($this->routerList as $router) {
+        foreach($this->getRouterList() as $router) {
             if($router->getAPIClient()->shouldRouteRequest($request)) {
                 return $router->route($request);
             }
