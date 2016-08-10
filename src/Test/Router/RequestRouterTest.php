@@ -2,6 +2,7 @@
 
 namespace CF\Router\Test;
 
+use CF\API\Client;
 use CF\Integration\DefaultIntegration;
 use CF\Router\RequestRouter;
 
@@ -40,10 +41,10 @@ class RequestRouterTest extends \PHPUnit_Framework_TestCase
 
     public function testAddRouterAddsRouter() {
         $this->requestRouter->addRouter('CF\API\Client', null);
-        $this->assertEquals('CF\Router\DefaultRestAPIRouter', get_class($this->requestRouter->getRouterList()[0]));
+        $this->assertEquals('CF\Router\DefaultRestAPIRouter', get_class($this->requestRouter->getRouterList()[Client::CLIENT_API_NAME]));
     }
 
-    public function testRouteRoutesRequest() {
+    public function testRoutePassesValidRequestToDefaultRestAPIRouter() {
         $mockDefaultRestAPIRouter = $this->getMockBuilder('CF\Router\DefaultRestAPIRouter')
             ->disableOriginalConstructor()
             ->getMock();

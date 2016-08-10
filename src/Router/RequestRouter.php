@@ -28,7 +28,7 @@ class RequestRouter
     public function addRouter($clientClassName, $routes) {
         $client = new $clientClassName($this->integrationContext);
         $router = new DefaultRestAPIRouter($this->integrationContext, $client, $routes);
-        array_push($this->routerList, $router);
+        $this->routerList[$client->getAPIClientName()] = $router;
     }
 
     /**
