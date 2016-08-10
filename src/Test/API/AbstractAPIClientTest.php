@@ -33,4 +33,10 @@ class AbstractAPIClientTest extends \PHPUnit_Framework_TestCase
         $this->mockAbstractAPIClient->method('getEndpoint')->willReturn($endpoint);
         $this->assertTrue($this->mockAbstractAPIClient->shouldRouteRequest($this->mockRequest));
     }
+
+    public function testShouldRouteRequestReturnsFalseForInvalidRequest() {
+        $this->mockRequest->method('getUrl')->willReturn("http://api.cloudflare.com/client/v4/zones");
+        $this->mockAbstractAPIClient->method('getEndpoint')->willReturn("https://api.cloudflare.com/host-gw.html");
+        $this->assertFalse($this->mockAbstractAPIClient->shouldRouteRequest($this->mockRequest));
+    }
 }
