@@ -2,6 +2,8 @@
 
 namespace CF\API\Test;
 
+use CF\API\Plugin;
+
 class AbstractPluginActionsTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -63,16 +65,6 @@ class AbstractPluginActionsTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($response['success']);
     }
 
-    public function testPostAccountSaveAPICredentialsReturnsDataStoreEmailIfSuccessful() {
-        $email = "email";
-        $this->mockRequest->method('getBody')->willReturn(array(
-            'apiKey' => 'apiKey',
-            $email => $email
-        ));
-        $this->mockAPIClient->method('createAPISuccessResponse')->willReturn(array('email' => $email));
-        $this->mockAbstractPluginActions->login();
-    }
-
     public function testGetPluginSettingsReturnsArray() {
         $this->mockAPIClient
             ->expects($this->once())
@@ -88,4 +80,84 @@ class AbstractPluginActionsTest extends \PHPUnit_Framework_TestCase
         $this->mockAPIClient->expects($this->once())->method('createAPIError');
         $this->mockAbstractPluginActions->patchPluginSettings();
     }
+
+    public function testGetPluginSettingsHandlesSuccess() {
+        /*
+         * This assertion should fail as we add new settings and should be updated to reflect
+         * count(Plugin::getPluginSettingsKeys())
+         */
+        $this->mockDataStore->expects($this->exactly(4))->method('get');
+        $this->mockAPIClient->expects($this->once())->method('createAPISuccessResponse');
+        $this->mockAbstractPluginActions->getPluginSettings();
+    }
+
+    public function testPatchPluginSettingsRouterRoutesGeneralSettings()
+    {
+        //mock patchPluginSettings so we can tell if its being called.
+        $this->mockAbstractPluginActions = $this->getMockBuilder('CF\API\AbstractPluginActions')
+            ->disableOriginalConstructor()
+            ->setMethods(array('patchPluginSettings'))
+            ->getMockForAbstractClass();
+        $this->mockAbstractPluginActions->setRequest($this->mockRequest);
+
+        $settingId = 'someSettingId';
+        $this->mockRequest->method('getUrl')->willReturn('plugin/:zonedId/settings/'.$settingId);
+        $this->mockAbstractPluginActions->expects($this->once())->method('patchPluginSettings');
+        $this->mockAbstractPluginActions->patchPluginSettingsRouter();
+
+    }
+
+    public function testPatchPluginSettingsRouterRoutesDefaultSettings()
+    {
+        //mock patchPluginDefaultSettings so we can tell if its being called.
+        $this->mockAbstractPluginActions = $this->getMockBuilder('CF\API\AbstractPluginActions')
+            ->disableOriginalConstructor()
+            ->setMethods(array('patchPluginDefaultSettings'))
+            ->getMockForAbstractClass();
+        $this->mockAbstractPluginActions->setRequest($this->mockRequest);
+
+        $this->mockRequest->method('getUrl')->willReturn('plugin/:zonedId/settings/'.Plugin::SETTING_DEFAULT_SETTINGS);
+        $this->mockAbstractPluginActions->expects($this->once())->method('patchPluginDefaultSettings');
+        $this->mockAbstractPluginActions->patchPluginSettingsRouter();
+    }
+
+    public function testPatchPluginSettingsUpdatesSetting() {
+        $value = "value";
+        $settingId = "settingId";
+        $this->mockRequest->method('getUrl')->willReturn('plugin/:zonedId/settings/'.$settingId);
+        $this->mockRequest->method('getBody')->willReturn(array($value => $value));
+        $this->mockDataStore->method('set')->willReturn(true);
+        $this->mockDataStore->expects($this->once())->method('set')->with($settingId, $value);
+        $this->mockAPIClient->expects($this->once())->method('createAPISuccessResponse');
+        $this->mockAbstractPluginActions->patchPluginSettings();
+    }
+
+    public function testPatchPluginSettingsReturnsErrorIfSettingUpdateFails() {
+        $value = "value";
+        $settingId = "settingId";
+        $this->mockRequest->method('getUrl')->willReturn('plugin/:zonedId/settings/'.$settingId);
+        $this->mockRequest->method('getBody')->willReturn(array($value => $value));
+        $this->mockDataStore->method('set')->willReturn(null);
+        $this->mockDataStore->expects($this->once())->method('set')->with($settingId, $value);
+        $this->mockAPIClient->expects($this->once())->method('createAPIError');
+        $this->mockAbstractPluginActions->patchPluginSettings();
+    }
+
+    public function testPatchPluginDefaultSettingsUpdatesDefaultSettings() {
+        $value = true;
+        $settingId = Plugin::SETTING_DEFAULT_SETTINGS;
+        $this->mockRequest->method('getUrl')->willReturn('plugin/:zonedId/settings/'.$settingId);
+        $this->mockRequest->method('getBody')->willReturn(array("value" => $value));
+        $this->mockDataStore->expects($this->once())->method('set')->with($settingId, $value);
+        $this->mockAbstractPluginActions->expects($this->once())->method('applyDefaultSettings');
+        $this->mockAPIClient->expects($this->once())->method('createAPISuccessResponse');
+        $this->mockAbstractPluginActions->patchPluginDefaultSettings();
+    }
+
+    public function testPatchPluginDefaultSettingsHandlesCloudFlareException() {
+        $this->mockAbstractPluginActions->method('applyDefaultSettings')->will($this->throwException(new \CF\API\Exception\ZoneSettingFailException()));
+        $this->mockAPIClient->expects($this->once())->method('createAPIError');
+        $this->mockAbstractPluginActions->patchPluginDefaultSettings();
+    }
 }
+
