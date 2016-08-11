@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.1.0](#1.1.0) - 2016-08-11
 ### Added
 - Added CF\Router\RequestRouter to consolidate duplicate request routing logic each plugin was implementing. [#8](https://github.com/cloudflare/cloudflare-plugin-backend/pull/8)
+
 ### Changed
 - PluginRoutes, PluginActions moved to CF\API to consolidate the Internal Plugin API logic across all plugins. [#10](https://github.com/cloudflare/cloudflare-plugin-backend/pull/10)
 
