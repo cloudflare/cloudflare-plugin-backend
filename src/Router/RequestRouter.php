@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace CF\Router;
 
@@ -28,7 +28,22 @@ class RequestRouter
     public function addRouter($clientClassName, $routes) {
         $client = new $clientClassName($this->integrationContext);
         $router = new DefaultRestAPIRouter($this->integrationContext, $client, $routes);
-        array_push($this->routerList, $router);
+        $this->routerList[$client->getAPIClientName()] = $router;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRouterList() {
+        return $this->routerList;
+    }
+
+
+    /**
+     * @param $routerList
+     */
+    public function setRouterList($routerList) {
+        $this->routerList = $routerList;
     }
 
     /**
@@ -36,7 +51,7 @@ class RequestRouter
      * @return bool
      */
     public function route(Request $request) {
-        foreach($this->routerList as $router) {
+        foreach($this->getRouterList() as $router) {
             if($router->getAPIClient()->shouldRouteRequest($request)) {
                 return $router->route($request);
             }
