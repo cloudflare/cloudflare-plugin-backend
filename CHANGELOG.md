@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.1](#1.1.1) - 2016-08-16
+### Added
+- Added plugin_specific_cache_tag setting to CF\API\Plugin settings. [#12](https://github.com/cloudflare/cloudflare-plugin-backend/pull/12)
+
 ## [1.1.0](#1.1.0) - 2016-08-11
 ### Added
 - Added CF\Router\RequestRouter to consolidate duplicate request routing logic each plugin was implementing. [#8](https://github.com/cloudflare/cloudflare-plugin-backend/pull/8)
