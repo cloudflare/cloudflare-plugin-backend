@@ -85,10 +85,18 @@ abstract class AbstractPluginActions
         $isCreated = $this->dataStore->createUserDataStore($requestBody["apiKey"], $requestBody["email"], null, null);
 
         if (!$isCreated) {
-            $this->logger->error('Creating user data to store failed');
-
+            //remove bad credentials
+            $this->dataStore->createUserDataStore(null, null, null, null);
             return $this->api->createAPIError('Unable to save user credentials');
         }
+
+        //Make a test request to see if the API Key, email are valid
+        $testRequest = new Request('GET', 'user/', array(), array());
+        $testResponse = $this->clientAPI->callAPI($testRequest);
+        if(!$this->clientAPI->responseOk($testResponse)) {
+            return $this->api->createAPIError("Email address or API key invalid.");
+        }
+
 
         $response = $this->api->createAPISuccessResponse(array('email' => $requestBody["email"]));
 
