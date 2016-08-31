@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.3](#1.1.3) - 2016-08-31
+### Fixed
+- Fixed bug where CF\API\AbstractPluginActions::login() would log the user in with invalid credentials. [#14](https://github.com/cloudflare/cloudflare-plugin-backend/pull/14)
+
 ## [1.1.2](#1.1.2) - 2016-08-17
 ### Changed
 - Fixed bug in CF\API\Exception. [#13](https://github.com/cloudflare/cloudflare-plugin-backend/pull/13)
