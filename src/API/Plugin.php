@@ -62,13 +62,13 @@ class Plugin extends Client
         );
     }
 
-    public function createPluginResult($id, $value, $editable, $modified_on)
+    public static function createPluginSettingObject($pluginSettingKey, $value, $editable, $modified_on)
     {
         return array(
-            'id' => $id,
-            'value' => $value,
-            'editable' => $editable,
-            'modified_on' => $modified_on,
+            DataStoreInterface::ID_KEY => $pluginSettingKey,
+            DataStoreInterface::VALUE_KEY => $value,
+            DataStoreInterface::EDITABLE_KEY => $editable,
+            DataStoreInterface::MODIFIED_DATE_KEY => $modified_on,
         );
     }
 }

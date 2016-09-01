@@ -4,6 +4,11 @@ namespace CF\Integration;
 
 interface DataStoreInterface
 {
+    const ID_KEY = 'id';
+    const VALUE_KEY = 'value';
+    const EDITABLE_KEY = 'editable';
+    const MODIFIED_DATE_KEY = 'modified_on';
+
     /**
      * @param $client_api_key
      * @param $email
@@ -39,6 +44,7 @@ interface DataStoreInterface
      * @return mixed
      */
     public function get($key);
+    public function get($key, $getValueOnly = false);
 
     /**
      * @param $key

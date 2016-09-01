@@ -107,7 +107,7 @@ abstract class AbstractPluginActions
         $formattedSettings = array();
         foreach ($settingsList as $setting) {
             $value = $this->dataStore->get($setting);
-            array_push($formattedSettings, $this->api->createPluginResult($setting, $value, true, ''));
+            array_push($formattedSettings, $value);
         }
 
         $response = $this->api->createAPISuccessResponse(
@@ -159,7 +159,7 @@ abstract class AbstractPluginActions
 
         $response = $this->api->createAPISuccessResponse(
             array(
-                $this->api->createPluginResult($settingId, $value, true, ''),
+                $this->dataStore->get($settingId),
             )
         );
 
@@ -188,7 +188,7 @@ abstract class AbstractPluginActions
 
         return $this->api->createAPISuccessResponse(
             array(
-                $this->api->createPluginResult(Plugin::SETTING_DEFAULT_SETTINGS, "on", true, ''),
+                $this->dataStore->get(Plugin::SETTING_DEFAULT_SETTINGS),
             )
         );
     }
