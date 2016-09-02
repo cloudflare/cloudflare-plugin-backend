@@ -44,7 +44,7 @@ interface DataStoreInterface
      *
      * @return mixed
      */
-    public function get($key, $getValueOnly = false);
+    public function get($key);
 
     /**
      * @param $key
