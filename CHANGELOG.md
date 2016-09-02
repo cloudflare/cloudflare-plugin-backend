@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.4](#1.1.4) - 2016-09-2
+### Changed
+- Changed Datastore to support objects. [#15](https://github.com/cloudflare/cloudflare-plugin-backend/pull/15)
+- Made PageRuleLimitException shorter. [#16](https://github.com/cloudflare/cloudflare-plugin-backend/pull/16)
+
 ## [1.1.3](#1.1.3) - 2016-08-31
 ### Fixed
 - Fixed bug where CF\API\AbstractPluginActions::login() would log the user in with invalid credentials. [#14](https://github.com/cloudflare/cloudflare-plugin-backend/pull/14)
