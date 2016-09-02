@@ -63,7 +63,7 @@ class Plugin extends Client
         );
     }
 
-    public function createPluginSettingObject($pluginSettingKey, $value, $editable, $modified_on)
+    public static function createPluginSettingObject($pluginSettingKey, $value, $editable, $modified_on)
     {
         return array(
             DataStoreInterface::ID_KEY => $pluginSettingKey,

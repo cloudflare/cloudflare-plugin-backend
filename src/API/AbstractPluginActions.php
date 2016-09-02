@@ -85,7 +85,6 @@ abstract class AbstractPluginActions
         }
 
         $isCreated = $this->dataStore->createUserDataStore($requestBody['apiKey'], $requestBody['email'], null, null);
-
         if (!$isCreated) {
             return $this->api->createAPIError('Unable to save user credentials');
         }

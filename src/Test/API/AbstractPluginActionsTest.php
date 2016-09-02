@@ -166,12 +166,13 @@ class AbstractPluginActionsTest extends \PHPUnit_Framework_TestCase
         $this->mockAbstractPluginActions->patchPluginDefaultSettings();
     }
 
-    public function testLoginReturnsErrorIfAPIKeyOrEmailAreInvalid() {
-        $apiKey = "apiKey";
-        $email = "email";
+    public function testLoginReturnsErrorIfAPIKeyOrEmailAreInvalid()
+    {
+        $apiKey = 'apiKey';
+        $email = 'email';
         $this->mockRequest->method('getBody')->willReturn(array(
             $apiKey => $apiKey,
-            $email => $email
+            $email => $email,
         ));
         $this->mockDataStore->method('createUserDataStore')->willReturn(true);
         $this->mockClientAPI->method('responseOk')->willReturn(false);
