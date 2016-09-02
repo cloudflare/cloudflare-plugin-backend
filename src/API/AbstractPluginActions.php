@@ -83,10 +83,12 @@ abstract class AbstractPluginActions
         if (empty($requestBody['email'])) {
             return $this->api->createAPIError("Missing required parameter: 'email'.");
         }
+
         $isCreated = $this->dataStore->createUserDataStore($requestBody['apiKey'], $requestBody['email'], null, null);
         if (!$isCreated) {
             return $this->api->createAPIError('Unable to save user credentials');
         }
+
         //Make a test request to see if the API Key, email are valid
         $testRequest = new Request('GET', 'user/', array(), array());
         $testResponse = $this->clientAPI->callAPI($testRequest);
@@ -96,6 +98,7 @@ abstract class AbstractPluginActions
 
             return $this->api->createAPIError('Email address or API key invalid.');
         }
+
         $response = $this->api->createAPISuccessResponse(array('email' => $requestBody['email']));
 
         return $response;
