@@ -2,6 +2,8 @@
 
 namespace CF\API;
 
+use CF\Integration\DataStoreInterface;
+
 class Plugin extends Client
 {
     const PLUGIN_API_NAME = 'PLUGIN API';
