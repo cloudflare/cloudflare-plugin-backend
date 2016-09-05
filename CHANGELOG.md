@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.6](#1.1.6) - 2016-09-5
+### Fixed
+- Fixed where DataStoreInterface was not included [c3502d](https://github.com/cloudflare/cloudflare-plugin-backend/commit/c3502db2904be385e2ad0e37287085fcecbfba5f)
+
 ## [1.1.5](#1.1.5) - 2016-09-2
 ### Fixed
 - Fixed Datastore::get [bdfb9](https://github.com/cloudflare/cloudflare-plugin-backend/commit/bdfb94275bb297473cf0801b33938810c32f0cc3)
