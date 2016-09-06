@@ -67,6 +67,7 @@ class AbstractPluginActionsTest extends \PHPUnit_Framework_TestCase
 
     public function testGetPluginSettingsReturnsArray()
     {
+        $this->mockDataStore->method('get')->willReturn(array());
         $this->mockAPIClient
             ->expects($this->once())
             ->method('createAPISuccessResponse')
@@ -89,6 +90,7 @@ class AbstractPluginActionsTest extends \PHPUnit_Framework_TestCase
          * This assertion should fail as we add new settings and should be updated to reflect
          * count(Plugin::getPluginSettingsKeys())
          */
+        $this->mockDataStore->method('get')->willReturn(array());
         $this->mockDataStore->expects($this->exactly(5))->method('get');
         $this->mockAPIClient->expects($this->once())->method('createAPISuccessResponse');
         $this->mockAbstractPluginActions->getPluginSettings();
@@ -178,5 +180,11 @@ class AbstractPluginActionsTest extends \PHPUnit_Framework_TestCase
         $this->mockClientAPI->method('responseOk')->willReturn(false);
         $this->mockAPIClient->expects($this->once())->method('createAPIError');
         $this->mockAbstractPluginActions->login();
+    }
+
+    public function testGetPluginSettingsCallsCreatePluginSettingObjectIfDataStoreGetIsNull() {
+        $this->mockDataStore->method('get')->willReturn(null);
+        $this->mockAPIClient->expects($this->atLeastOnce())->method('createPluginSettingObject');
+        $this->mockAbstractPluginActions->getPluginSettings();
     }
 }
