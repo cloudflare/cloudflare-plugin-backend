@@ -4,6 +4,7 @@ namespace CF\Test\API;
 
 use CF\API\Request;
 use CF\Integration\DefaultIntegration;
+use CF\Integration\DataStoreInterface;
 use CF\API\Plugin;
 
 class PluginTest extends \PHPUnit_Framework_TestCase
@@ -61,5 +62,24 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $response = $this->pluginAPIClient->callAPI($request);
 
         $this->assertFalse($response['success']);
+    }
+
+    public function testCreatePluginSettingObject()
+    {
+        $pluginSettingKey = 'key';
+        $value = 'value';
+        $editable = false;
+        $modifiedOn = null;
+
+        $expected = array(
+            DataStoreInterface::ID_KEY => $pluginSettingKey,
+            DataStoreInterface::VALUE_KEY => $value,
+            DataStoreInterface::EDITABLE_KEY => $editable,
+            DataStoreInterface::MODIFIED_DATE_KEY => $modifiedOn,
+        );
+
+        $result = $this->pluginAPIClient->createPluginSettingObject($pluginSettingKey, $value, $editable, $modifiedOn);
+
+        $this->assertEquals($expected, $result);
     }
 }
