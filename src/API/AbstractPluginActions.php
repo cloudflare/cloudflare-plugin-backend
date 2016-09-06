@@ -116,6 +116,10 @@ abstract class AbstractPluginActions
         $formattedSettings = array();
         foreach ($settingsList as $setting) {
             $value = $this->dataStore->get($setting);
+            if($value === null) {
+                //setting hasn't been set yet.
+                $value = $this->api->createPluginSettingObject($setting, null, true, null);
+            }
             array_push($formattedSettings, $value);
         }
 
