@@ -81,7 +81,8 @@ class Plugin extends Client
             self::SETTING_ID_KEY => $pluginSettingKey,
             self::SETTING_VALUE_KEY => $value,
             self::SETTING_EDITABLE_KEY => $editable,
-            self::SETTING_MODIFIED_DATE_KEY => $modified_on,
+            // Format ISO 8601
+            self::SETTING_MODIFIED_DATE_KEY => date('c'),
         );
     }
 }
