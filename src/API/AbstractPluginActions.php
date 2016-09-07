@@ -142,7 +142,7 @@ abstract class AbstractPluginActions
 
         $body = $this->request->getBody();
         $value = $body['value'];
-        $options = $this->dataStore->set($settingId, $this->api->createPluginSettingObject($settingId, $value, true, null));
+        $options = $this->dataStore->set($settingId, $this->api->createPluginSettingObject($settingId, $value, true, true));
 
         if (!isset($options)) {
             return $this->api->createAPIError('Unable to update plugin settings');
