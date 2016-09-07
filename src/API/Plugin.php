@@ -77,12 +77,17 @@ class Plugin extends Client
      */
     public function createPluginSettingObject($pluginSettingKey, $value, $editable, $modified_on)
     {
+        //allow null for settings that have never been set
+        if($modified_on !== null) {
+            // Format ISO 8601
+            $modified_on = date('c');
+        }
+
         return array(
             self::SETTING_ID_KEY => $pluginSettingKey,
             self::SETTING_VALUE_KEY => $value,
             self::SETTING_EDITABLE_KEY => $editable,
-            // Format ISO 8601
-            self::SETTING_MODIFIED_DATE_KEY => date('c'),
+            self::SETTING_MODIFIED_DATE_KEY => $modified_on,
         );
     }
 }
