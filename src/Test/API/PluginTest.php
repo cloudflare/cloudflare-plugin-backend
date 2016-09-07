@@ -80,6 +80,8 @@ class PluginTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->pluginAPIClient->createPluginSettingObject($pluginSettingKey, $value, $editable, $modifiedOn);
 
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($pluginSettingKey, $result['id']);
+        $this->assertEquals($value, $result['value']);
+        $this->assertEquals($editable, $result['editable']);
     }
 }
