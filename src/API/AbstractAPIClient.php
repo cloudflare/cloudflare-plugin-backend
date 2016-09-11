@@ -81,7 +81,7 @@ abstract class AbstractAPIClient implements APIInterface
     }
 
     /**
-     * @param RequestException $object
+     * @param RequestException $error
      *
      * @return string
      */
@@ -97,9 +97,10 @@ abstract class AbstractAPIClient implements APIInterface
      */
     public function logAPICall($apiName, $message, $isError)
     {
-        $logLevel = 'error';
         if ($isError === false) {
             $logLevel = 'debug';
+        } else {
+            $logLevel = 'error';
         }
 
         if (!is_string($message)) {
@@ -120,6 +121,11 @@ abstract class AbstractAPIClient implements APIInterface
         return substr($request->getUrl(), strpos($request->getUrl(), $this->getEndpoint()) + strlen($this->getEndpoint()));
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return bool
+     */
     public function shouldRouteRequest(Request $request)
     {
         return strpos($request->getUrl(), $this->getEndpoint()) !== false;

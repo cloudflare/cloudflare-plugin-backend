@@ -24,8 +24,8 @@ class DefaultRestAPIRouter implements RouterInterface
         ':bigint_id' => '[0-9]{1,19}',
         ':human_readable_id' => '[-0-9a-z_]{1,120}',
         ':rayid' => '[0-9a-z]{16}',
-        ':firewall_rule_id' => '[0-9a-zA-Z\\-_]{1,160}',
-        ':file_name' => '[0-9A-Za-z_\\.\\-]{1,120}',
+        ':firewall_rule_id' => '[-0-9a-zA-Z_]{1,160}',
+        ':file_name' => '[-0-9A-Za-z_\\.]{1,120}',
         ':uuid' => '[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}',
     );
 

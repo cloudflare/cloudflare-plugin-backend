@@ -26,6 +26,8 @@ class DefaultLogger extends AbstractLogger implements LoggerInterface
      * @param mixed  $level
      * @param string $message
      * @param array  $context
+     *
+     * @return bool
      */
     public function log($level, $message, array $context = array())
     {
@@ -38,6 +40,8 @@ class DefaultLogger extends AbstractLogger implements LoggerInterface
      *
      * @param string $message
      * @param array  $context
+     *
+     * @return bool|null
      */
     public function debug($message, array $context = array())
     {

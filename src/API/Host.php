@@ -46,7 +46,7 @@ class Host extends AbstractAPIClient
      */
     public function responseOk($host_api_response)
     {
-        return $host_api_response['result'] === 'success';
+        return !empty($host_api_response['result']) && $host_api_response['result'] === 'success';
     }
 
     /**

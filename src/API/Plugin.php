@@ -21,6 +21,9 @@ class Plugin extends Client
     const SETTING_EDITABLE_KEY = 'editable';
     const SETTING_MODIFIED_DATE_KEY = 'modified_on';
 
+    /**
+     * @return array
+     */
     public static function getPluginSettingsKeys()
     {
         return array(
@@ -58,13 +61,18 @@ class Plugin extends Client
         return $this->createAPIError('The url: '.$request->getUrl().' is not a valid path.');
     }
 
+    /**
+     * @param $result
+     *
+     * @return array
+     */
     public function createAPISuccessResponse($result)
     {
         return array(
             'success' => true,
             'result' => $result,
-            'messages' => [],
-            'errors' => [],
+            'messages' => array(),
+            'errors' => array(),
         );
     }
 
@@ -72,22 +80,22 @@ class Plugin extends Client
      * @param $pluginSettingKey
      * @param $value
      * @param $editable
-     * @param $modified_on
+     * @param $modifiedOn
      * @return array
      */
-    public function createPluginSettingObject($pluginSettingKey, $value, $editable, $modified_on)
+    public function createPluginSettingObject($pluginSettingKey, $value, $editable, $modifiedOn)
     {
         //allow null for settings that have never been set
-        if($modified_on !== null) {
+        if($modifiedOn !== null) {
             // Format ISO 8601
-            $modified_on = date('c');
+            $modifiedOn = date('c');
         }
 
         return array(
             self::SETTING_ID_KEY => $pluginSettingKey,
             self::SETTING_VALUE_KEY => $value,
             self::SETTING_EDITABLE_KEY => $editable,
-            self::SETTING_MODIFIED_DATE_KEY => $modified_on,
+            self::SETTING_MODIFIED_DATE_KEY => $modifiedOn,
         );
     }
 }

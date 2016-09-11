@@ -6,16 +6,23 @@ use Psr\Log\LoggerInterface;
 
 class DefaultIntegration implements IntegrationInterface
 {
+    /** @var ConfigInterface */
     private $config;
+
+    /** @var IntegrationAPIInterface */
     private $integrationAPI;
+
+    /** @var DataStoreInterface */
     private $dataStore;
+
+    /** @var LoggerInterface */
     private $logger;
 
     /**
-     * @param ConfigInterface                          $config
-     * @param IntegrationAPIInterface                  $integrationAPI
-     * @param DataStoreInterface                       $dataStore
-     * @param LoggerInterface|\Psr\Log\LoggerInterface $logger
+     * @param ConfigInterface         $config
+     * @param IntegrationAPIInterface $integrationAPI
+     * @param DataStoreInterface      $dataStore
+     * @param LoggerInterface         $logger
      */
     public function __construct(ConfigInterface $config, IntegrationAPIInterface $integrationAPI, DataStoreInterface $dataStore, LoggerInterface $logger)
     {
@@ -42,7 +49,7 @@ class DefaultIntegration implements IntegrationInterface
     }
 
     /**
-     * @return integrationAPI
+     * @return IntegrationAPIInterface
      */
     public function getIntegrationAPI()
     {
@@ -58,7 +65,7 @@ class DefaultIntegration implements IntegrationInterface
     }
 
     /**
-     * @return DataStore
+     * @return DataStoreInterface
      */
     public function getDataStore()
     {
