@@ -26,6 +26,7 @@ class RequestRouter
      */
     public function addRouter($clientClassName, $routes)
     {
+        /** @var \CF\API\AbstractAPIClient $client */
         $client = new $clientClassName($this->integrationContext);
         $router = new DefaultRestAPIRouter($this->integrationContext, $client, $routes);
         $this->routerList[$client->getAPIClientName()] = $router;
@@ -60,6 +61,6 @@ class RequestRouter
             }
         }
 
-        return;
+        return false;
     }
 }

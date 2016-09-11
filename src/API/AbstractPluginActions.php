@@ -4,15 +4,29 @@ namespace CF\API;
 
 use CF\Integration\DataStoreInterface;
 use CF\Integration\DefaultIntegration;
+use Psr\Log\LoggerInterface;
 
 abstract class AbstractPluginActions
 {
+    /** @var APIInterface */
     protected $api;
+
+    /** @var \CF\Integration\ConfigInterface */
     protected $config;
+
+    /** @var \CF\Integration\IntegrationAPIInterface */
     protected $integrationAPI;
+
+    /** @var DataStoreInterface */
     protected $dataStore;
+
+    /** @var LoggerInterface */
     protected $logger;
+
+    /** @var Request */
     protected $request;
+
+    /** @var Client */
     protected $clientAPI;
 
     /**
@@ -64,7 +78,7 @@ abstract class AbstractPluginActions
         $this->dataStore = $dataStore;
     }
 
-    public function setLogger(\Psr\Log\LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
@@ -116,18 +130,14 @@ abstract class AbstractPluginActions
         $formattedSettings = array();
         foreach ($settingsList as $setting) {
             $value = $this->dataStore->get($setting);
-            if($value === null) {
+            if ($value === null) {
                 //setting hasn't been set yet.
                 $value = $this->api->createPluginSettingObject($setting, null, true, null);
             }
             array_push($formattedSettings, $value);
         }
 
-        $response = $this->api->createAPISuccessResponse(
-            $formattedSettings
-        );
-
-        return $response;
+        return $this->api->createAPISuccessResponse($formattedSettings);
     }
 
     /**
@@ -148,21 +158,15 @@ abstract class AbstractPluginActions
             return $this->api->createAPIError('Unable to update plugin settings');
         }
 
-        if($settingId === Plugin::SETTING_DEFAULT_SETTINGS) {
+        if ($settingId === Plugin::SETTING_DEFAULT_SETTINGS) {
             try {
                 $this->applyDefaultSettings();
-            } catch (\Exception $e) {
-                if ($e instanceof Exception\CloudFlareException) {
-                    return $this->api->createAPIError($e->getMessage());
-                } else {
-                    throw $e;
-                }
+            } catch (Exception\CloudFlareException $e) {
+                return $this->api->createAPIError($e->getMessage());
             }
         }
 
-        $response = $this->api->createAPISuccessResponse($this->dataStore->get($settingId));
-
-        return $response;
+        return $this->api->createAPISuccessResponse($this->dataStore->get($settingId));
     }
 
     /**
