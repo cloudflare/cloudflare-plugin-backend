@@ -53,16 +53,15 @@ class DefaultRestAPIRouter implements RouterInterface
     {
         $request->setUrl($this->api->getPath($request));
 
-        $routeParameters = $this->getRoute($request);
-        if ($routeParameters) {
-            $class = $routeParameters['class'];
-            $function = $routeParameters['function'];
-            $routeClass = new $class($this->integration, $this->api, $request);
-
-            return $routeClass->$function();
-        } else {
+        if (!$routeParameters = $this->getRoute($request)) {
             return $this->api->callAPI($request);
         }
+
+        $class = $routeParameters['class'];
+        $function = $routeParameters['function'];
+        $routeClass = new $class($this->integration, $this->api, $request);
+
+        return $routeClass->$function();
     }
 
     /**
@@ -98,19 +97,19 @@ class DefaultRestAPIRouter implements RouterInterface
             );
 
             //Check to see if this is our route
-            if (preg_match('#^'.$regex.'/?$#', $request->getUrl())) {
-                if (in_array($request->getMethod(), $route_details_array['methods']) || array_key_exists(
-                    $request->getMethod(),
-                    $route_details_array['methods']
-                )
-                ) {
-                    $this->logger->debug('Route matched for '.$request->getMethod().$request->getUrl().' now using '.$route_details_array['methods'][$request->getMethod()]['function']);
+            if (!preg_match('#^'.$regex.'/?$#', $request->getUrl())) {
+                continue;
+            }
 
-                    return array(
-                        'class' => $route_details_array['class'],
-                        'function' => $route_details_array['methods'][$request->getMethod()]['function'],
-                    );
-                }
+            if (in_array($request->getMethod(), $route_details_array['methods'])
+                || array_key_exists($request->getMethod(), $route_details_array['methods'])
+            ) {
+                $this->logger->debug('Route matched for '.$request->getMethod().$request->getUrl().' now using '.$route_details_array['methods'][$request->getMethod()]['function']);
+
+                return array(
+                    'class' => $route_details_array['class'],
+                    'function' => $route_details_array['methods'][$request->getMethod()]['function'],
+                );
             }
         }
 

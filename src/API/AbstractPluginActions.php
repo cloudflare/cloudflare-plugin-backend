@@ -166,9 +166,7 @@ abstract class AbstractPluginActions
             }
         }
 
-        $response = $this->api->createAPISuccessResponse($this->dataStore->get($settingId));
-
-        return $response;
+        return $this->api->createAPISuccessResponse($this->dataStore->get($settingId));
     }
 
     /**
