@@ -97,16 +97,10 @@ abstract class AbstractAPIClient implements APIInterface
      */
     public function logAPICall($apiName, $message, $isError)
     {
-        if ($isError === false) {
-            $logLevel = 'debug';
-        } else {
-            $logLevel = 'error';
-        }
-
         if (!is_string($message)) {
             $message = print_r($message, true);
         }
-
+        $logLevel = $isError === false ? 'debug' : 'error';
         $this->logger->$logLevel('['.$apiName.'] '.$message);
     }
 
