@@ -39,7 +39,9 @@ abstract class AbstractAPIClient implements APIInterface
 
             $request = $this->beforeSend($request);
 
-            $bodyType = (($request->getHeaders()[self::CONTENT_TYPE_KEY] === self::APPLICATION_JSON_KEY) ? 'json' : 'body');
+            $headers = $request->getHeaders();
+            $contentTypeHeader = $headers[self::CONTENT_TYPE_KEY];
+            $bodyType = (($contentTypeHeader === self::APPLICATION_JSON_KEY) ? 'json' : 'body');
 
             $requestOptions = array(
                 'headers' => $request->getHeaders(),
