@@ -39,7 +39,9 @@ abstract class AbstractAPIClient implements APIInterface
 
             $request = $this->beforeSend($request);
 
-            $bodyType = (($request->getHeaders()[self::CONTENT_TYPE_KEY] === self::APPLICATION_JSON_KEY) ? 'json' : 'body');
+            $headers = $request->getHeaders();
+            $contentTypeHeader = $headers[self::CONTENT_TYPE_KEY];
+            $bodyType = (($contentTypeHeader === self::APPLICATION_JSON_KEY) ? 'json' : 'body');
 
             $requestOptions = array(
                 'headers' => $request->getHeaders(),
@@ -51,9 +53,18 @@ abstract class AbstractAPIClient implements APIInterface
                 $requestOptions['debug'] = fopen('php://stderr', 'w');
             }
 
-            $apiRequest = $client->createRequest($request->getMethod(), $request->getUrl(), $requestOptions);
+            $apiRequest = $client->createRequest($request->getMethod(), $request->getUrl(), $request->getHeaders(), $request->getBody(), $request->getParameters());
 
-            $response = $apiRequest->send($apiRequest)->json();
+            $method = $request->getMethod();
+
+            // Since Guzzle automatically overwrites a new header when the request
+            // is POST / PATCH / DELETE, we need to overwrite the Content-Type header
+            // with setBody() function.
+            if ($method === 'PATCH' || $method === 'DELETE' || $method === 'POST') {
+                $apiRequest->setBody(json_encode($request->getBody()), 'application/json');
+            }
+
+            $response = $client->send($apiRequest)->json();
 
             if (json_last_error() !== JSON_ERROR_NONE) {
                 throw new BadResponseException('Error decoding client API JSON', $response);
@@ -74,7 +85,7 @@ abstract class AbstractAPIClient implements APIInterface
                 'headers' => $request->getHeaders(),
                 'params' => $request->getParameters(),
                 'body' => $request->getBody(), ), true);
-            $this->logAPICall($this->getAPIClientName(), array('type' => 'response', 'code' => $e->getCode(), 'body' => $errorMessage, 'stacktrace' => $e->getTraceAsString()), true);
+            $this->logAPICall($this->getAPIClientName(), array('type' => 'response', 'reason' => $e->getResponse()->getReasonPhrase(), 'code' => $e->getResponse()->getStatusCode(), 'body' => $errorMessage, 'stacktrace' => $e->getTraceAsString()), true);
 
             return $this->createAPIError($errorMessage);
         }
