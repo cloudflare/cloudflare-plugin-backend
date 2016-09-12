@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.9](#1.1.9) - 2016-09-12
+### Fixed
+- Fixed bugs in Guzzle3 and backend which didn't work with PHP 5.3. [#25](https://github.com/cloudflare/cloudflare-plugin-backend/pull/25)
+
 ## [1.1.8](#1.1.8) - 2016-09-12
 ### Changed
 - Downgraded guzzlehttp 5.0 to guzzle 3.9 to support PHP 5.3. [#23](https://github.com/cloudflare/cloudflare-plugin-backend/pull/23)
