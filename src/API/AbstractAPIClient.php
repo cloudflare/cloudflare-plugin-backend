@@ -3,8 +3,8 @@
 namespace CF\API;
 
 use CF\Integration\IntegrationInterface;
-use GuzzleHttp;
-use GuzzleHttp\Exception\RequestException;
+use Guzzle\Http\Client;
+use Guzzle\Http\Exception\BadResponseException;
 
 abstract class AbstractAPIClient implements APIInterface
 {
@@ -35,7 +35,7 @@ abstract class AbstractAPIClient implements APIInterface
     public function callAPI(Request $request)
     {
         try {
-            $client = new GuzzleHttp\Client(['base_url' => $this->getEndpoint()]);
+            $client = new Client($this->getEndpoint());
 
             $request = $this->beforeSend($request);
 
@@ -53,10 +53,10 @@ abstract class AbstractAPIClient implements APIInterface
 
             $apiRequest = $client->createRequest($request->getMethod(), $request->getUrl(), $requestOptions);
 
-            $response = $client->send($apiRequest)->json();
+            $response = $apiRequest->send($apiRequest)->json();
 
             if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new RequestException('Error decoding client API JSON', $response);
+                throw new BadResponseException('Error decoding client API JSON', $response);
             }
 
             if (!$this->responseOk($response)) {
@@ -64,7 +64,7 @@ abstract class AbstractAPIClient implements APIInterface
             }
 
             return $response;
-        } catch (RequestException $e) {
+        } catch (BadResponseException $e) {
             $errorMessage = $this->getErrorMessage($e);
 
             $this->logAPICall($this->getAPIClientName(), array(
@@ -81,11 +81,11 @@ abstract class AbstractAPIClient implements APIInterface
     }
 
     /**
-     * @param RequestException $object
+     * @param BadResponseException $object
      *
      * @return string
      */
-    public function getErrorMessage(RequestException $error)
+    public function getErrorMessage(BadResponseException $error)
     {
         return $error->getMessage();
     }

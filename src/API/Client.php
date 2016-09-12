@@ -2,7 +2,7 @@
 
 namespace CF\API;
 
-use GuzzleHttp\Exception\RequestException;
+use Guzzle\Http\Exception\BadResponseException;
 
 class Client extends AbstractAPIClient
 {
@@ -51,11 +51,11 @@ class Client extends AbstractAPIClient
     }
 
     /**
-     * @param RequestException error
+     * @param BadResponseException error
      *
      * @return string
      */
-    public function getErrorMessage(RequestException $error)
+    public function getErrorMessage(BadResponseException $error)
     {
         $jsonResponse = json_decode($error->getResponse()->getBody(), true);
         $errorMessage = $error->getMessage();
