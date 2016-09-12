@@ -58,9 +58,9 @@ abstract class AbstractAPIClient implements APIInterface
             $method = $request->getMethod();
 
             // Since Guzzle automatically overwrites a new header when the request
-            // is POST / PATCH / DELETE, we need to overwrite the Content-Type header
+            // is POST / PATCH / DELETE / PUT, we need to overwrite the Content-Type header
             // with setBody() function.
-            if ($method === 'PATCH' || $method === 'DELETE' || $method === 'POST') {
+            if ($method !== 'GET') {
                 $apiRequest->setBody(json_encode($request->getBody()), 'application/json');
             }
 
