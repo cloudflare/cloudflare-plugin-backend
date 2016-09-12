@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.10](#1.1.10) - 2016-09-12
+### Fixed
+- Fixed method PUT not having a http body bug. [#26](https://github.com/cloudflare/cloudflare-plugin-backend/pull/26)
+
 ## [1.1.9](#1.1.9) - 2016-09-12
 ### Fixed
 - Fixed bugs in Guzzle3 and backend which didn't work with PHP 5.3. [#25](https://github.com/cloudflare/cloudflare-plugin-backend/pull/25)
