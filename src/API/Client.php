@@ -60,7 +60,7 @@ class Client extends AbstractAPIClient
      *
      * @return string
      */
-    public function getErrorMessage(BadResponseException $error)
+    public function getErrorMessage($error)
     {
         $jsonResponse = json_decode($error->getResponse()->getBody(), true);
         $errorMessage = $error->getMessage();
