@@ -56,7 +56,7 @@ class Client extends AbstractAPIClient
     }
 
     /**
-     * @param BadResponseException error
+     * @param error
      *
      * @return string
      */

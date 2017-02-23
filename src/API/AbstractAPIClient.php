@@ -122,7 +122,7 @@ abstract class AbstractAPIClient implements APIInterface
     }
 
     /**
-     * @param BadResponseException $object
+     * @param $error
      *
      * @return string
      */
