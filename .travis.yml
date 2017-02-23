@@ -8,5 +8,5 @@ install:
     - composer install
 
 script:
-    - composer format
+    - composer lint
     - composer test
