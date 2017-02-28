@@ -2,7 +2,7 @@
   "name": "cloudflare/cloudflare-plugin-backend",
   "description": "A PHP backend for Cloudflare plugins.",
   "license": "BSD-3-Clause",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "scripts": {
     "test": "vendor/bin/phpunit",
     "lint": "vendor/bin/phpcs -n --standard=PSR2 --extensions=php src/",
@@ -20,5 +20,5 @@
     "psr-4": {
       "CF\\": "src/"
     }
-}
+  }
 }
