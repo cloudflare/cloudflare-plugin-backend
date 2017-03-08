@@ -22,7 +22,7 @@ class RequestRouter
     }
 
     /**
-     * @param $client
+     * @param APIInterface $client
      * @param $routes
      */
     public function addRouter(APIInterface $client, $routes)
