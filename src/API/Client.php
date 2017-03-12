@@ -3,6 +3,7 @@
 namespace CF\API;
 
 use Guzzle\Http\Exception\BadResponseException;
+use CF\Integration\IntegrationInterface;
 
 class Client extends AbstractAPIClient
 {
@@ -10,6 +11,15 @@ class Client extends AbstractAPIClient
     const ENDPOINT = 'https://api.cloudflare.com/client/v4/';
     const X_AUTH_KEY = 'X-Auth-Key';
     const X_AUTH_EMAIL = 'X-Auth-Email';
+
+
+    /**
+     * @param IntegrationInterface $integration
+     */
+    public function __construct(IntegrationInterface $integration)
+    {
+        parent::__construct($integration);
+    }
 
     /**
      * @param Request $request
@@ -79,7 +89,7 @@ class Client extends AbstractAPIClient
      */
     public function responseOk($response)
     {
-        return $response['success'] === true;
+        return isset($response['success']) ? $response['success'] : false;
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace CF\API;
 
+use CF\Integration\IntegrationInterface;
+
 class Plugin extends Client
 {
     const PLUGIN_API_NAME = 'PLUGIN API';
@@ -18,6 +20,14 @@ class Plugin extends Client
     const SETTING_VALUE_KEY = 'value';
     const SETTING_EDITABLE_KEY = 'editable';
     const SETTING_MODIFIED_DATE_KEY = 'modified_on';
+
+    /**
+     * @param IntegrationInterface $integration
+     */
+    public function __construct(IntegrationInterface $integration)
+    {
+        parent::__construct($integration);
+    }
 
     public static function getPluginSettingsKeys()
     {
