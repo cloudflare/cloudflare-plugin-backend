@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0](#2.1.0) - 2017-13-08
+### Changed
+- `CF\API\AbstractAPIClient` depends on `CF\API\HttpClientInterface` and uses `CF\API\DefaultHttpClient` (Guzzle 5) [#37](https://github.com/cloudflare/cloudflare-plugin-backend/pull/37)
+
 ## [2.0.0](#2.0.0) - 2017-03-08
 ### Changed
 - Reverted `CF\API\AbstractAPIClient` to Guzzle 5 [#35](https://github.com/cloudflare/cloudflare-plugin-backend/pull/35)
