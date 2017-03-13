@@ -6,6 +6,8 @@ This is a PHP backend for the official Cloudflare [cPanel](https://github.com/cl
 `composer require cloudflare/cloudflare-plugin-backend`
 
 ## Development
-`$ composer test`
-`$ composer lint`
-`$ composer format`
+```
+$ composer test
+$ composer lint
+$ composer format
+```
