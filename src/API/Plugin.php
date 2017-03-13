@@ -21,14 +21,6 @@ class Plugin extends Client
     const SETTING_EDITABLE_KEY = 'editable';
     const SETTING_MODIFIED_DATE_KEY = 'modified_on';
 
-    /**
-     * @param IntegrationInterface $integration
-     */
-    public function __construct(IntegrationInterface $integration)
-    {
-        parent::__construct($integration);
-    }
-
     public static function getPluginSettingsKeys()
     {
         return array(

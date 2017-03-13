@@ -23,11 +23,12 @@ class DefaultHttpClient implements HttpClientInterface
 
     /**
      * @param  Request $request
+     * @throws RequestException
      * @return Array $response
      */
     public function send(Request $request)
     {
-        $apiRequest = $this->getGuzzleRequest($request);
+        $apiRequest = $this->createGuzzleRequest($request);
 
         $response = $this->client->send($apiRequest)->json();
 
@@ -42,7 +43,7 @@ class DefaultHttpClient implements HttpClientInterface
      * @param  Request $request
      * @return GuzzleHttp\Message\RequestInterface $request
      */
-    public function getGuzzleRequest(Request $request)
+    public function createGuzzleRequest(Request $request)
     {
         $bodyType = (($request->getHeaders()[self::CONTENT_TYPE_KEY] === self::APPLICATION_JSON_KEY) ? 'json' : 'body');
 

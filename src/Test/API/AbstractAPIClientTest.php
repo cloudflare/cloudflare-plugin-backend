@@ -114,4 +114,10 @@ class AbstractAPIClientTest extends \PHPUnit_Framework_TestCase
         $this->mockAbstractAPIClient->method('getEndpoint')->willReturn('https://api.cloudflare.com/host-gw.html');
         $this->assertFalse($this->mockAbstractAPIClient->shouldRouteRequest($this->mockRequest));
     }
+
+    public function testSendAndLogCallsLogger()
+    {
+        $this->mockLogger->expects($this->once())->method('error');
+        $this->mockAbstractAPIClient->sendAndLog($this->mockRequest);
+    }
 }

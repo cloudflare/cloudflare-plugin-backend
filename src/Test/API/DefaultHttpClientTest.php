@@ -46,8 +46,8 @@ class DefaultHttpClientTest extends \PHPUnit_Framework_TestCase
           $this->defaultHttpClient->send($this->mockRequest);
     }
 
-    public function testGetGuzzleRequestReturnsGuzzleRequest()
+    public function testCreateGuzzleRequestReturnsGuzzleRequest()
     {
-        $this->assertInstanceOf(RequestInterface::class, $this->defaultHttpClient->getGuzzleRequest($this->mockRequest));
+        $this->assertInstanceOf(RequestInterface::class, $this->defaultHttpClient->createGuzzleRequest($this->mockRequest));
     }
 }

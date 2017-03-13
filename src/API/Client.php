@@ -12,15 +12,6 @@ class Client extends AbstractAPIClient
     const X_AUTH_KEY = 'X-Auth-Key';
     const X_AUTH_EMAIL = 'X-Auth-Email';
 
-
-    /**
-     * @param IntegrationInterface $integration
-     */
-    public function __construct(IntegrationInterface $integration)
-    {
-        parent::__construct($integration);
-    }
-
     /**
      * @param Request $request
      *
