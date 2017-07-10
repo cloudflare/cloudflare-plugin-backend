@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.2.0](#2.2.0) - 2017-07-10
-### Changed
+### Added
 - Added a new route to get config. Returns an empty array by default. [#39](https://github.com/cloudflare/cloudflare-plugin-backend/pull/39)
 
 ## [2.1.1](#2.1.1) - 2017-04-05
