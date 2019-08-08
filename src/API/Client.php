@@ -11,6 +11,7 @@ class Client extends AbstractAPIClient
     const ENDPOINT = 'https://api.cloudflare.com/client/v4/';
     const X_AUTH_KEY = 'X-Auth-Key';
     const X_AUTH_EMAIL = 'X-Auth-Email';
+    const AUTHORIZATION = 'Authorization';
 
     /**
      * @param Request $request
@@ -19,12 +20,20 @@ class Client extends AbstractAPIClient
      */
     public function beforeSend(Request $request)
     {
+        $key = $this->data_store->getClientV4APIKey();
         $headers = array(
-            self::X_AUTH_KEY => $this->data_store->getClientV4APIKey(),
-            self::X_AUTH_EMAIL => $this->data_store->getCloudFlareEmail(),
             self::CONTENT_TYPE_KEY => self::APPLICATION_JSON_KEY,
         );
-        $request->setHeaders($headers);
+
+        // Determine authentication method from key format. Global API keys are
+        // always returned in hexadecimal format, while API Tokens are encoded
+        // using a wider range of characters.
+        if (preg_match('/^[0-9a-f]+$/', $key)) {
+            $headers[self::X_AUTH_EMAIL] = $this->data_store->getCloudFlareEmail();
+            $headers[self::X_AUTH_KEY] = $key;
+        } else {
+            $headers[self::AUTHORIZATION] = "Bearer {$key}";
+        }
 
         // Remove cfCSRFToken (a custom header) to save bandwidth
         $body = $request->getBody();
