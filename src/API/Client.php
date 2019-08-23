@@ -12,6 +12,7 @@ class Client extends AbstractAPIClient
     const X_AUTH_KEY = 'X-Auth-Key';
     const X_AUTH_EMAIL = 'X-Auth-Email';
     const AUTHORIZATION = 'Authorization';
+    const AUTH_KEY_LEN = 37;
 
     /**
      * @param Request $request
@@ -28,7 +29,7 @@ class Client extends AbstractAPIClient
         // Determine authentication method from key format. Global API keys are
         // always returned in hexadecimal format, while API Tokens are encoded
         // using a wider range of characters.
-        if (preg_match('/^[0-9a-f]+$/', $key)) {
+        if (strlen($key) === AUTH_KEY_LEN && preg_match('/^[0-9a-f]+$/', $key)) {
             $headers[self::X_AUTH_EMAIL] = $this->data_store->getCloudFlareEmail();
             $headers[self::X_AUTH_KEY] = $key;
         } else {
