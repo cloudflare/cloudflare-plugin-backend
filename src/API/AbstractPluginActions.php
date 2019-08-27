@@ -90,7 +90,7 @@ abstract class AbstractPluginActions
         }
 
         //Make a test request to see if the API Key, email are valid
-        $testRequest = new Request('GET', 'user/', array(), array());
+        $testRequest = new Request('GET', 'zones/', array(), array());
         $testResponse = $this->clientAPI->callAPI($testRequest);
         if (!$this->clientAPI->responseOk($testResponse)) {
             //remove bad credentials
