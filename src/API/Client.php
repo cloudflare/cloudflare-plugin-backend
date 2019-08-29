@@ -36,6 +36,8 @@ class Client extends AbstractAPIClient
             $headers[self::AUTHORIZATION] = "Bearer {$key}";
         }
 
+        $request->setHeaders($headers);
+
         // Remove cfCSRFToken (a custom header) to save bandwidth
         $body = $request->getBody();
         $body['cfCSRFToken'] = null;
