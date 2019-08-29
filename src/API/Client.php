@@ -29,7 +29,7 @@ class Client extends AbstractAPIClient
         // Determine authentication method from key format. Global API keys are
         // always returned in hexadecimal format, while API Tokens are encoded
         // using a wider range of characters.
-        if (strlen($key) === AUTH_KEY_LEN && preg_match('/^[0-9a-f]+$/', $key)) {
+        if (strlen($key) === self::AUTH_KEY_LEN && preg_match('/^[0-9a-f]+$/', $key)) {
             $headers[self::X_AUTH_EMAIL] = $this->data_store->getCloudFlareEmail();
             $headers[self::X_AUTH_KEY] = $key;
         } else {
