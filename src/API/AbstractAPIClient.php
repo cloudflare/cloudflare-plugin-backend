@@ -85,6 +85,7 @@ abstract class AbstractAPIClient implements APIInterface
     public function sanitizeHeaders(Request $request)
     {
         $request->removeHeader('Authorization');
+        $request->removeHeader('X-Auth-Email');
         $request->removeHeader('X-Auth-Key');
         return $request;
     }
