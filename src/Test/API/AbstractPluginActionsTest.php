@@ -96,7 +96,7 @@ class AbstractPluginActionsTest extends \PHPUnit_Framework_TestCase
          * count(Plugin::getPluginSettingsKeys())
          */
         $this->mockDataStore->method('get')->willReturn(array());
-        $this->mockDataStore->expects($this->exactly(5))->method('get');
+        $this->mockDataStore->expects($this->exactly(6))->method('get');
         $this->mockAPIClient->expects($this->once())->method('createAPISuccessResponse');
         $this->mockAbstractPluginActions->getPluginSettings();
     }
