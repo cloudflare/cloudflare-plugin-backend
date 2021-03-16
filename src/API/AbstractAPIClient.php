@@ -69,25 +69,13 @@ abstract class AbstractAPIClient implements APIInterface
                 'type' => 'request',
                 'method' => $request->getMethod(),
                 'path' => $request->getUrl(),
-                'headers' => $this->sanitizeHeaders($request)->getHeaders(),
+                'headers' => $request->getHeaders(),
                 'params' => $request->getParameters(),
                 'body' => $request->getBody(), ), true);
             $this->logAPICall($this->getAPIClientName(), array('type' => 'response', 'code' => $e->getCode(), 'body' => $errorMessage, 'stacktrace' => $e->getTraceAsString()), true);
 
             return $this->createAPIError($errorMessage);
         }
-    }
-
-    /**
-     * @param Request $request
-     * @return Request
-     */
-    public function sanitizeHeaders(Request $request)
-    {
-        $request->removeHeader('Authorization');
-        $request->removeHeader('X-Auth-Email');
-        $request->removeHeader('X-Auth-Key');
-        return $request;
     }
 
     /**
@@ -155,11 +143,23 @@ abstract class AbstractAPIClient implements APIInterface
      */
     public function logAPICall($apiName, $message, $isError)
     {
+        $sensitiveHeaderKeys = array(
+            'Authorization',
+            'X-Auth-Email',
+            'X-Auth-Key'
+        );
+
         $logLevel = 'error';
         if ($isError === false) {
             $logLevel = 'debug';
         }
         if (!is_string($message)) {
+            foreach ($sensitiveHeaderKeys as $value) {
+                if (!empty($message['headers'][$value])) {
+                    $message['headers'][$value] = 'REDACTED';
+                }
+            }
+
             $message = print_r($message, true);
         }
         $this->logger->$logLevel('['.$apiName.'] '.$message);
