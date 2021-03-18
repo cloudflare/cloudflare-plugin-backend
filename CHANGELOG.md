@@ -2,11 +2,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.4.0](#2.4.0) - 20120-10-01
+## [2.5.0](#2.5.0) - 2021-03-19
+
+### Fixed
+- Sanitize sensitive HTTP headers when calling the `logAPICall` method. [#52](https://github.com/cloudflare/cloudflare-plugin-backend/pull/52)
+- Stop sending `cfCRSFToken` to remote API. [#41](https://github.com/cloudflare/cloudflare-plugin-backend/pull/41)
+
+## [2.4.0](#2.4.0) - 2020-10-01
 ### Added
 - Added APO support [#48](https://github.com/cloudflare/cloudflare-plugin-backend/pull/48)
 
-## [2.3.0](#2.3.0) - 20120-09-23
+## [2.3.0](#2.3.0) - 2020-09-23
 ### Fixed
 - Fixed issue #255 Scope test api request to current zone. [#46](https://github.com/cloudflare/cloudflare-plugin-backend/pull/46)
 - Sanitize authentication headers. [#45](https://github.com/cloudflare/cloudflare-plugin-backend/pull/45)
