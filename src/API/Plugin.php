@@ -16,6 +16,7 @@ class Plugin extends Client
     const SETTING_PLUGIN_SPECIFIC_CACHE = 'plugin_specific_cache';
     const SETTING_PLUGIN_SPECIFIC_CACHE_TAG = 'plugin_specific_cache_tag';
     const SETTING_AUTOMATIC_PLATFORM_OPTIMIZATION = 'automatic_platform_optimization';
+    const SETTING_AUTOMATIC_PLATFORM_OPTIMIZATION_CACHE_BY_DEVICE_TYPE = 'automatic_platform_optimization_cache_by_device_type';
 
     const SETTING_ID_KEY = 'id';
     const SETTING_VALUE_KEY = 'value';
@@ -31,6 +32,7 @@ class Plugin extends Client
             self::SETTING_PLUGIN_SPECIFIC_CACHE,
             self::SETTING_PLUGIN_SPECIFIC_CACHE_TAG,
             self::SETTING_AUTOMATIC_PLATFORM_OPTIMIZATION,
+            self::SETTING_AUTOMATIC_PLATFORM_OPTIMIZATION_CACHE_BY_DEVICE_TYPE,
         );
     }
 
