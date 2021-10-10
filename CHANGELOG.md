@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.6.0](#2.6.0) - 2021-10-11
+
+### Added
+- Add `SETTING_AUTOMATIC_PLATFORM_OPTIMIZATION_CACHE_BY_DEVICE_TYPE` setting [#53](https://github.com/cloudflare/cloudflare-plugin-backend/pull/53)
+
 ## [2.5.0](#2.5.0) - 2021-03-19
 
 ### Fixed
