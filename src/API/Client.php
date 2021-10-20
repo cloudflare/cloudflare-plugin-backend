@@ -26,7 +26,7 @@ class Client extends AbstractAPIClient
         $json = json_decode(file_get_contents('composer.json'));
         $headers = array(
             self::CONTENT_TYPE_KEY => self::APPLICATION_JSON_KEY,
-            self::USER_AGENT => 'cloudflare-plugin-backend/' . $json->version,
+            self::USER_AGENT => 'cloudflare-wordpress-plugin/' . $json->version,
         );
 
         // Determine authentication method from key format. Global API keys are
