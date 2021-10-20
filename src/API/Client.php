@@ -23,9 +23,10 @@ class Client extends AbstractAPIClient
     public function beforeSend(Request $request)
     {
         $key = $this->data_store->getClientV4APIKey();
+        $json = json_decode(file_get_contents('composer.json'));
         $headers = array(
             self::CONTENT_TYPE_KEY => self::APPLICATION_JSON_KEY,
-            self::USER_AGENT => 'cloudflare-plugin-backend',
+            self::USER_AGENT => 'cloudflare-plugin-backend/' . $json->version,
         );
 
         // Determine authentication method from key format. Global API keys are
