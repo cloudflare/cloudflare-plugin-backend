@@ -13,6 +13,7 @@ class Client extends AbstractAPIClient
     const X_AUTH_EMAIL = 'X-Auth-Email';
     const AUTHORIZATION = 'Authorization';
     const AUTH_KEY_LEN = 37;
+    const USER_AGENT = 'User-Agent';
 
     /**
      * @param Request $request
@@ -24,6 +25,7 @@ class Client extends AbstractAPIClient
         $key = $this->data_store->getClientV4APIKey();
         $headers = array(
             self::CONTENT_TYPE_KEY => self::APPLICATION_JSON_KEY,
+            self::USER_AGENT => 'cloudflare-plugin-backend',
         );
 
         // Determine authentication method from key format. Global API keys are
