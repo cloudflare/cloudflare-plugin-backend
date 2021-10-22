@@ -1,13 +1,3 @@
-[![Build Status](https://travis-ci.org/cloudflare/cloudflare-plugin-backend.svg?branch=master)](https://travis-ci.org/cloudflare/cloudflare-plugin-backend)
+# Repository deprecated
 
-This is a PHP backend for the official Cloudflare [cPanel](https://github.com/cloudflare/CloudFlare-CPanel), [Magento](https://github.com/cloudflare/CloudFlare-Magento), and [WordPress](https://github.com/cloudflare/CloudFlare-WordPress) plugins.
-
-## Installation
-`composer require cloudflare/cloudflare-plugin-backend`
-
-## Development
-```
-$ composer test
-$ composer lint
-$ composer format
-```
+This repository is no longer maintained and has been merged into https://github.com/cloudflare/cloudflare-wordpress.
